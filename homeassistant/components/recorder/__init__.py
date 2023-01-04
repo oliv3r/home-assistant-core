@@ -20,7 +20,7 @@ from homeassistant.helpers.integration_platform import (
 from homeassistant.helpers.typing import ConfigType
 from homeassistant.loader import bind_hass
 
-from . import entity_registry, websocket_api
+from . import backup, entity_registry, history, websocket_api
 from .const import (  # noqa: F401
     CONF_DB_INTEGRITY_CHECK,
     DATA_INSTANCE,

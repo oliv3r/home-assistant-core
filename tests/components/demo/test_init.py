@@ -4,6 +4,7 @@ from unittest.mock import patch
 
 import pytest
 
+from homeassistant.components import recorder
 from homeassistant.components.demo import DOMAIN
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.json import JSONEncoder

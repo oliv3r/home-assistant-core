@@ -15,7 +15,6 @@ import voluptuous as vol
 
 from homeassistant.components.binary_sensor import DOMAIN as BINARY_SENSOR_DOMAIN
 from homeassistant.components.input_number import DOMAIN as INPUT_NUMBER_DOMAIN
-from homeassistant.components.recorder import get_instance, history
 from homeassistant.components.sensor import (
     ATTR_STATE_CLASS,
     DOMAIN as SENSOR_DOMAIN,
@@ -23,6 +22,7 @@ from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorEntity,
 )
+from homeassistant.components import recorder
 from homeassistant.const import (
     ATTR_DEVICE_CLASS,
     ATTR_ENTITY_ID,
@@ -311,9 +311,9 @@ class SensorFilter(SensorEntity):
 
             # Retrieve the largest window_size of each type
             if largest_window_items > 0:
-                filter_history = await get_instance(self.hass).async_add_executor_job(
+                filter_history = await recorder.get_instance(self.hass).async_add_executor_job(
                     partial(
-                        history.get_last_state_changes,
+                        recorder.history.get_last_state_changes,
                         self.hass,
                         largest_window_items,
                         entity_id=self._entity,
@@ -323,9 +323,9 @@ class SensorFilter(SensorEntity):
                     history_list.extend(filter_history[self._entity])
             if largest_window_time > timedelta(seconds=0):
                 start = dt_util.utcnow() - largest_window_time
-                filter_history = await get_instance(self.hass).async_add_executor_job(
+                filter_history = await recorder.get_instance(self.hass).async_add_executor_job(
                     partial(
-                        history.state_changes_during_period,
+                        recorder.history.state_changes_during_period,
                         self.hass,
                         start,
                         entity_id=self._entity,
