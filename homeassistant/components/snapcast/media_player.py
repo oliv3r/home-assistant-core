@@ -57,8 +57,9 @@ async def async_setup_platform(
 ) -> None:
     """Set up the Snapcast platform."""
 
-    host = config.get(CONF_HOST)
-    port = config.get(CONF_PORT, CONTROL_PORT)
+    if not discovery_info:
+        host = config.get(CONF_HOST)
+        port = config.get(CONF_PORT, CONTROL_PORT)
 
     platform = entity_platform.async_get_current_platform()
     platform.async_register_entity_service(SERVICE_SNAPSHOT, {}, "snapshot")

@@ -1,4 +1,5 @@
 """Constants for Snapcast."""
+DOMAIN = "snapcast"
 
 DATA_KEY = "snapcast"
 
